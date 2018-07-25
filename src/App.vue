@@ -39,10 +39,31 @@
     <p>{{fullName}}</p>
     <button v-on:click='format' type="button">Click Me!</button>
     <p>{{formattedName}}</p>
+
+
+    <div class = 'container'>
+      <input type="text" placeholder="Busca canciones" v-model='searchQuery'>
+      <a href="#" class="button.is-info is-large" v-on:click='search'>Buscar</a>
+      <a href="#" class="button is-info is-large">&times;</a>
+      <p><small>{{searchMessage}}</small></p>
+
+    </div>
+    <div class = 'container'>
+      <div class="column" v-for="item in tracks">{{item.name}} - {{item.artist}}</div>
+    </div> 
+
+    
+
   </div>
 </template>
 
 <script>
+
+const tracks = [
+  { name: 'muchacha', artist: 'Luis Alberto Spinetta' },
+  { name: 'Hoy aca en el baile', artist: 'El Pepo' },
+  { name: 'Iwas made for loving you', artist: 'kiss' },
+];
 export default {
   name: 'app',
   data() {
@@ -58,14 +79,22 @@ export default {
         name: 'Eduardo',
       },
       formattedName: '',
+      searchQuery: '',
+      tracks: [],
     };
   },
   methods: {
+    search() {
+      this.tracks = tracks;
+    },
     format() {
       this.formattedName = this.name.split(' ').join('-').toUpperCase();
     },
   },
   computed: {
+    searchMessage() {
+      return `Encontramos: ${this.tracks.length}`;
+    },
     fullName() {
       return `${this.name} ${this.lastName}`;
     },
